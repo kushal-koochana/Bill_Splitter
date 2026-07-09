@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>User's guide and credits</h1>
+<p>
+    Web Development Stack: HTML, CSS & Google Fonts, JS & AJAX, Python & Flask & Jinja
+</p>
+<p>
+    Welcome to the website, if it's your first time. I just wanted to give a quick helping guide for those that could
+    struggle in
+    understanding. If the symbols are unfamiliar to you, hover over them to get the text format. Have a quick read of
+    the home page
+    it gives a very brief summary. To become a user, you'd need to login securely with correct email address and
+    password (and had
+    to register beforehand, which you already know). Your email address and username will need to be unique (if you're
+    here they
+    must be).
+</p>
+<p>
+    Next let's have a talk on the top panel. Home page will lead you to our welcome page. The bell icon is for
+    notifications. You'd
+    get notifications, only when there's a new bill payment, and you'd get a small red number for number of unread
+    notifications
+    (straightforward right). To logout it's the far right symbol on the dashboard. And obviously you know now where the
+    guide is
+    and are free to refer to it when needed.
+</p>
+<p>
+    The final and main part (you might want to skip here for referring quickly) is the dashboard panel. To create a bill
+    which will automatically be saved as a draft, click the filter icon, and click the purple button. Quick note
+    whenever you
+    create a bill or pay a share of a bill, you need to show payment proof (in the form of an image). Also you need to
+    select
+    one or more users (and the money will be distributed evenly or as evenly as you can get when amount isn't divisible
+    by number
+    of bill payers for the bill). Once you've submitted a created paid bill with necessary fields filled, then it gets
+    automatically shown on the first table (paid bill drafts), there are two actions to send (in which case you'd lose
+    edit
+    access and users can now pay the bill you've proposed), or you can edit (if there are incorrect details you can
+    change them).
+    Once sent, your bill record is moved to the second table (your paid bills) and users who are meant to pay you a bill
+    share,
+    will receive a notification as well as the bill share details in the third table (your owed bills). Then they'd have
+    the option
+    to reject your payment in the third table, if they feel like an unknown person has sent a payment, and it will be
+    sent back to
+    your drafts. If you owed someone a bill then it'd end up in the third table as well.
+</p>
+<p>
+    Final tips: To view all shared users and their payee receipts do click on > View...; it's hidden in case the list of
+    shared
+    users and so their payee receipts are too long. Please ensure as the creator of the paid bill, that the due date
+    isn't the
+    deadline of when the bill's actually paid (this isn't a bill tracker). Due date in this website and context means
+    when all
+    shares of a bill have to be paid back to the person who paid the bill in full for all users. Statuses in Shared
+    Users & Statuses
+    and Statuses just shows what their/a current bill share payment status is e.g. Overdue (deadline's passed and user
+    hasn't paid
+    debt back), Late Payment, Due, Paid on Time. Amount shown in the third table (your owed bills) is the actual share
+    amount to
+    pay the creator of the paid bill, not the full amount of the paid bill.
+</p>
+{% endblock %}

@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="form_wrapper">
+    <div class="card payshare_card">
+        <h1>Pay Your Share</h1>
+        <div class="payshare_info">
+            <p><strong>Bill:</strong> {{ share.bill.title }}</p>
+            <p><strong>Amount Owed:</strong> £{{ "%.2f"|format(share.share_amount) }}</p>
+        </div>
+        <form method="POST" enctype="multipart/form-data">
+            <label>Upload Payment Proof:</label>
+            <input class="form_input" type="file" name="payment_image" required>
+            <button type="submit" class="form_btn payshare_btn">
+                Submit Payment
+            </button>
+        </form>
+    </div>
+</div>
+{% endblock %}

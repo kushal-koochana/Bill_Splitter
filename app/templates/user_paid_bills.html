@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+{% block content %}
+<h2 class="table_heading">Created Paid Bills for {{ user.username }}</h2>
+<div class="table_container">
+<table class="table admin_table">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Title</th>
+            <th>Amount (£)</th>
+            <th>Category</th>
+            <th>Creator</th>
+            <th>Shared Users</th>
+            <th>Due Date</th>
+            <th>Draft or not</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for bill in bills %}
+        <tr>
+            <td>{{ bill.id }}</td>
+            <td>{{ bill.title }}</td>
+            <td>{{ "%.2f"|format(bill.amount) }}</td>
+            <td>{{ bill.category }}</td>
+            <td>{{ bill.creator.username }}</td>
+            <td>
+                <details class="view_shared_users">
+                    <summary><u>View Shared Users</u></summary>
+                        {% for share in bill.shares %}
+                            {{ share.user.username }}<br>
+                        {% endfor %}
+                </details>
+            </td>
+            <td>{{ bill.shares_due_date.strftime("%d/%m/%Y") }}</td>
+            <td>{{ bill.is_draft }}</td>
+            <td>
+                {% if not bill.is_draft %}
+                    <a class="table_btn archive_btn" href="{{ url_for('admin.archive_bill', bill_id=bill.id) }}">Archive</a>
+                {% endif %}
+                <a class="table_btn delete_btn" href="{{ url_for('admin.delete_bill', bill_id=bill.id) }}">Delete</a>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+</div><br><br>
+{% endblock %}

@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+{% block content %}
+<header class="hero">
+    <div class="hero_overlay">
+        <h1>Split Bills Easily</h1>
+        <h2> Share and track expenses with friends, family and housemates easily and quickly.</h2>
+        <p>
+            Bill Splitter Deluxe helps you organise payments, track balances and settle 
+            debts quickly.
+        </p>
+        <a class="home_btn cta_btn" href= "
+        {% if current_user.is_authenticated %}
+            {{url_for('bills.bills_dashboard')}}
+        {% else %}
+            {{ url_for('auth.register') }}
+        {% endif %}">
+            Start Splitting Bills
+        </a>
+    </div>
+</header>
+
+<section class="features">
+    <div class="card feature_card">
+        <h3>Bills Paid</h3>
+        <p>
+            Split shared costs instantly and calculate exactly who owes what.
+        </p>
+    </div>
+    <div class="card feature_card">
+        <h3>All In One Place</h3>
+        <p>
+            Organise group expenses, trips and housemate finances in one dashboard.
+        </p>
+    </div>
+    <div class="card feature_card">
+        <h3>Track Balances</h3>
+        <p>
+            See outstanding balances and settle debts easily with clear summaries.
+        </p>
+    </div>
+</section>
+{% endblock %}

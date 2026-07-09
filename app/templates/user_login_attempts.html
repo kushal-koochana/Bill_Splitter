@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% block content %}
+<h2 class="table_heading">Login Attempts for {{ user.username }}</h2>
+<div class="table_container">
+<table class="table admin_table">
+    <thead>
+        <tr>
+            <th>Email Attempted</th>
+            <th>User ID</th>
+            <th>Success</th>
+            <th>Time</th>
+        </tr>
+    </thead>
+
+    <tbody>
+       {% for attempt in user_login_attempts %}
+            <tr class="{% if attempt.success %} good_attempt
+            {% else %} bad_attempt {% endif %}">
+                <td>{{ attempt.email_attempted }}</td>
+                <td>{{ attempt.user_id }}</td>
+                <td>{{ attempt.success }}</td>
+                <td>{{ attempt.created_at }}</td>
+            </tr>
+        {% endfor %} 
+    </tbody>
+</table>
+</div><br><br>
+{% endblock %}

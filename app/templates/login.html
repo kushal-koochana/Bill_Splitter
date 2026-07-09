@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="form_wrapper auth_wrapper">
+    <form method="POST" class="card auth_form">
+        <h1 class="form_title">Login</h1>
+
+        <div class="input_box">
+            <input class="form_input" type="email" name="email" placeholder="Email" required>
+            <span class="icon">✉</span>
+        </div>
+
+        <div class="input_box">
+            <input class="form_input" type="password" name="password" placeholder="Password" required>
+            <span class="icon">ꄗ</span>
+        </div>
+
+        <button type="submit" class="form_btn auth_btn">Login</button>
+
+        <p>
+            <a href="{{ url_for('auth.forgot_password') }}" class="auth_links">
+                Forgot password?
+            </a>
+        </p>
+
+        <p>
+            Don't have an account?
+            <a href="{{ url_for('auth.register') }}" class="auth_links">
+                Register
+            </a>
+        </p>
+    </form>
+</div>
+{% endblock %}

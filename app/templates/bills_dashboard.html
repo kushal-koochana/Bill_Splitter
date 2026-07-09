@@ -1,0 +1,202 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="dashboard_header">
+    <details class="filter_dropdown">
+        <summary class="filter_icon">
+            <span class="material-symbols-outlined">filter_list</span>
+        </summary>
+
+        <div class="sidebar_content">
+            <button class="category_filter" data-category="All">All</button>
+            <button class="category_filter" data-category="Utilities">Utilities</button>
+            <button class="category_filter" data-category="Rent">Rent</button>
+            <button class="category_filter" data-category="Groceries">Groceries</button>
+            <button class="category_filter" data-category="Entertainment">Entertainment</button>
+            <button class="category_filter" data-category="Other">Other</button>
+            <a href="{{ url_for('bills.create_paid_bill') }}">Create a Paid Bill</a>
+        </div>
+    </details>
+
+    <h1>Bills Dashboard</h1>
+</div>
+
+<h2 class="table_heading">Your Paid Bill Drafts</h2>
+<div class="table_container">
+    <table class="table user_table">
+        <thead>
+            <tr>
+                <th>Title</th>
+                <th>Amount (£)</th>
+                <th>Category</th>
+                <th>Due Date</th>
+                <th>Shared Users</th>
+                <th>Your Payment Receipt</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for bill in drafted_bills %}
+            <tr data-category="{{ bill.category }}">
+                <td>{{ bill.title }}</td>
+                <td>{{ "%.2f"|format(bill.amount) }}</td>
+                <td>{{ bill.category }}</td>
+                <td>{{ bill.shares_due_date.strftime("%d/%m/%Y") }}</td>
+                <td>
+                    <details class="view_shared_users">
+                        <summary><u>View Shared Users</u></summary>
+                        {% for share in bill.shares %}
+                        {{ share.user.username }}<br>
+                        {% endfor %}
+                    </details>
+                </td>
+                <td>
+                    {% if bill.payment_image %}
+                    <a href="{{ url_for('bills.paid_bill_image', bill_id=bill.id) }}">View Receipt</a>
+                    {% else %}
+                    No such receipt uploaded
+                    {% endif %}
+                </td>
+                <td>
+                    <a class="table_btn edit_btn" href="{{ url_for('bills.edit_paid_bill', bill_id=bill.id) }}">
+                        Edit
+                    </a>
+                    <a class="table_btn send_btn" href="{{ url_for('bills.send_paid_bill', bill_id=bill.id) }}">
+                        Send
+                    </a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div><br><br>
+
+<h2 class="table_heading">Your Paid Bills (owed shares status)</h2>
+<div class="table_container">
+    <table class="table user_table">
+        <thead>
+            <tr>
+                <th>Title</th>
+                <th>Amount (£)</th>
+                <th>Category</th>
+                <th>Due Date</th>
+                <th>Shared Users & Statuses</th>
+                <th>Your Payment Receipt</th>
+                <th>Your Payee Receipts</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for bill in created_bills %}
+            <tr data-category="{{ bill.category }}">
+                <td>{{ bill.title }}</td>
+                <td>{{ "%.2f"|format(bill.amount) }}</td>
+                <td>{{ bill.category }}</td>
+                <td>{{ bill.shares_due_date.strftime("%d/%m/%Y") }}</td>
+                <td>
+                    <details class="view_shared_users">
+                        <summary><u>View Shared Users & Statuses</u></summary>
+                        {% for share in bill.shares %}
+                        {{ share.user.username }}:
+                        {% if share.individual_status == "Overdue" %}
+                        <span style="color:red;">Overdue</span>
+                        {% elif share.individual_status == "Late Payment" %}
+                        <span style="color:orangered;">Late Payment</span>
+                        {% elif share.individual_status == "Due" %}
+                        <span style="color:yellowgreen;">Due</span>
+                        {% else %}
+                        <span style="color:green;">Paid On Time</span>
+                        {% endif %}
+                        <br>
+                        {% endfor %}
+                    </details>
+                </td>
+                <td>
+                    {% if bill.payment_image %}
+                    <a href="{{ url_for('bills.paid_bill_image', bill_id=bill.id) }}">View Receipt</a>
+                    {% else %}
+                    No such receipt uploaded
+                    {% endif %}
+                </td>
+                <td>
+                    <details class="view_shared_users">
+                        <summary><u>View Payee Receipts</u></summary>
+                        {% for share in bill.shares %}
+                        {{ share.user.username }}:
+                        {% if share.payment_image %}
+                        <a href="{{ url_for('bills.paid_share_image', share_id=share.id) }}">
+                            View Receipt
+                        </a>
+                        {% else %}
+                        No evidence uploaded yet
+                        {% endif %}<br>
+                        {% endfor %}
+                    </details>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div><br><br>
+
+<h2 class="table_heading">Your Owed Bills</h2>
+<div class="table_container">
+    <table class="table user_table">
+        <thead>
+            <tr>
+                <th>Title</th>
+                <th>Amount (£)</th>
+                <th>Category</th>
+                <th>Due Date</th>
+                <th>Status & Action</th>
+                <th>Your Payment Receipt</th>
+                <th>Your Payee Receipt</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for share in shared_bills %}
+            <tr data-category="{{ share.bill.category }}">
+                <td>{{ share.bill.title }}</td>
+                <td>{{ "%.2f"|format(share.share_amount) }}</td>
+                <td>{{ share.bill.category }}</td>
+                <td>{{ share.bill.shares_due_date.strftime("%d/%m/%Y") }}</td>
+                <td>
+                    {% if share.individual_status == "Overdue" %}
+                    <span style="color:red;">Overdue</span>:
+                    <a class="table_btn mark_paid_btn" href="{{ url_for('bills.pay_share', share_id=share.id) }}">Mark
+                        as Paid</a>
+                    <a class="table_btn delete_btn"
+                        href="{{ url_for('bills.reject_share', share_id=share.id) }}">Reject</a>
+                    {% elif share.individual_status == "Late Payment" %}
+                    <span style="color:yellowgreen;">Late Payment</span>
+                    {% elif share.individual_status == "Due" %}
+                    <span style="color:orangered;">Due</span>:
+                    <a class="table_btn mark_paid_btn" href="{{ url_for('bills.pay_share', share_id=share.id) }}">Mark
+                        as Paid</a>
+                    <a class="table_btn delete_btn"
+                        href="{{ url_for('bills.reject_share', share_id=share.id) }}">Reject</a>
+                    {% else %}
+                    <span style="color:green;">Paid On Time</span>
+                    {% endif %}
+                </td>
+                <td>
+                    {% if share.payment_image %}
+                    <a href="{{ url_for('bills.paid_share_image', share_id=share.id) }}">View Receipt</a>
+                    {% else %}
+                    No such receipt uploaded
+                    {% endif %}
+                </td>
+                <td>
+                    {{ share.bill.creator.username }}:
+                    {% if share.bill.payment_image %}
+                    <a href="{{ url_for('bills.paid_bill_image', bill_id=share.bill.id) }}">
+                        View Receipt
+                    </a>
+                    {% else %}
+                    No evidence uploaded yet
+                    {% endif %}<br>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div><br><br>
+{% endblock %}

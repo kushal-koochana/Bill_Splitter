@@ -1,0 +1,71 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="form_wrapper">
+    <form method="POST" enctype="multipart/form-data" class="card bill_form">
+
+        <h1>{% if bill %}Edit Bill{% else %}Create Bill{% endif %}</h1>
+
+        <div class="form_group">
+            <label>Title</label>
+            <input class="form_input" type="text" name="title" value="{{ bill.title if bill else '' }}" required>
+        </div>
+
+        <div class="form_group">
+            <label>Amount (£)</label>
+            <input class="form_input" type="number" step="0.01" min="0.01" name="amount" value="{{ bill.amount if bill else '' }}" required>
+        </div>
+
+        <div class="form_group">
+            <label>Category</label>
+            <select class="form_input" name="category" required>
+                {% for category in categories %}
+                    <option value="{{ category }}"
+                    {% if bill and bill.category == category %}selected{% endif %}>
+                        {{ category }}
+                    </option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <div class="form_group">
+        <details class="share_dropdown">
+            <summary>Select users to share with:</summary>
+            <div class="checkbox_group">
+                {% for user in users %}
+                    <label class="checkbox_item">
+                        <input class="form_input" type="checkbox" name="shared_persons" value="{{ user.id }}"
+                        {% if bill and user.id in shared_user_ids %}checked{% endif %}>
+                        {{ user.username }}
+                    </label>
+                {% endfor %}
+            </div>
+        </details>
+        </div>
+
+        <div class="form_group">
+            <label>Due Date</label>
+            <input class="form_input" type="date" name="shares_due_date"
+            value="{{ bill.shares_due_date.strftime('%Y-%m-%d') if bill else '' }}" required>
+        </div>
+
+        {% if bill and bill.payment_image %}
+        <p>
+            Current receipt:
+            <a href="{{ url_for('bills.paid_bill_image', bill_id=bill.id) }}">
+                View
+            </a>
+        </p>
+        {% endif %}
+
+        <div class="form_group">
+            <label>Upload Receipt</label>
+            <input class="form_input" type="file" name="payment_image" accept="image/*" {% if not bill %}required{% endif %}>
+        </div>
+
+        <button type="submit" class="form_btn submit_btn">
+            {% if bill %}Update Bill{% else %}Create Bill{% endif %}
+        </button>
+
+    </form>
+</div>
+{% endblock %}

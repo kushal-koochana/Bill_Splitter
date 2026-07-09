@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+{% block content %}
+<h2 class="table_heading">All Users</h2>
+<div class="table_container">
+<table class="table admin_table">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Username</th>
+            <th>Email</th>
+            <th>Admin</th>
+            <th>Paid Bills (includes drafted bills as well)</th>
+            <th>User Login Attempts</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for user in users %}
+            <tr>
+                <td>{{ user.id }}</td>
+                <td>{{ user.username }}</td>
+                <td>{{ user.email }}</td>
+                <td>{{ user.is_admin }}</td>
+                <td>
+                    <a href="{{ url_for('admin.view_user_bills', user_id=user.id) }}">
+                        View Bills
+                    </a>
+                </td>
+                <td>
+                    <a href="{{ url_for('admin.view_user_login_attempts', user_id=user.id)}}">
+                        View Attempts
+                    </a>
+                </td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
+</div><br><br>
+
+<div class="table_container">
+<h2 class="table_heading">Security Risks Log (Unknown Account Login Attempts (at the time))</h2>
+<table class="table security_risk_table">
+    <thead>
+        <tr>
+            <th>Email Attempted</th>
+            <th>Success</th>
+            <th>Time</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for attempt in security_risks %}
+            <tr>
+                <td>{{ attempt.email_attempted }}</td>
+                <td>{{ attempt.success }}</td>
+                <td>{{ attempt.created_at }}</td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
+</div><br><br>
+{% endblock %}
