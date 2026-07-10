@@ -1,0 +1,34 @@
+# Python bytecode and cache
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.pytest_cache/
+
+# Virtual environments
+venv/
+vcwk/
+env/
+ENV/
+
+# Configuration and secrets (DO NOT COMMIT)
+.env
+
+# SQLite databases
+instance/
+*.db
+*.sqlite3
+
+# User-uploaded files (ignores test images while keeping the uploads directory)
+app/static/uploads/*
+!app/static/uploads/.gitkeep
+
+# IDEs and Editors
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Operating System files
+.DS_Store
+Thumbs.db
