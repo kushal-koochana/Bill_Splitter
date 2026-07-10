@@ -96,20 +96,7 @@ flask init-db
 Note: The default administrator credentials are initialized as admin@example.com
 / Password123.
 
-2. Configure Environment Variables
-
-Create a .env file in the root folder (or copy .env.example) to hold local
-configuration settings:
-
-FLASK_APP=app
-FLASK_DEBUG=true
-SECRET_KEY=this_should_be_a_secret_key
-DATABASE_URL=sqlite:///billsplitter.db
-MAIL_SUPPRESS_SEND=false
-MAIL_SERVER=127.0.0.1
-MAIL_PORT=8025
-
-3. Run a Local Mail Server for Testing
+2. Run a Local Mail Server for Testing
 
 To test automated notification emails and password resets locally [1]:
 
