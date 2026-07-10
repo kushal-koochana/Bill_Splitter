@@ -1,7 +1,3 @@
-Here is a professional, comprehensive README.md formatted to showcase the
-engineering decisions, collaborative workflows, and technical details of your
-project to internship recruiters.
-
 Bill Splitter Deluxe
 
 A secure, collaborative expense-sharing and bill-splitting web application built
