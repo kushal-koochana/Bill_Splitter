@@ -9,14 +9,12 @@ def create_app():
     app = Flask(__name__)
     app.config.from_object(Config)
 
-    # Initialize extensions
     db.init_app(app)
     login_manager.init_app(app)
     mail.init_app(app)
 
     login_manager.login_view = "auth.login"
 
-    # Register blueprints
     from app.routes.admin import admin_bp
     from app.routes.auth import auth_bp
     from app.routes.bills import bills_bp
@@ -25,7 +23,6 @@ def create_app():
     app.register_blueprint(bills_bp)
     app.register_blueprint(admin_bp)
 
-    # User loader definition
     from app.models import User
 
     @login_manager.user_loader
@@ -63,7 +60,6 @@ def create_app():
 
         db.create_all()
 
-        # Check and seed admin
         admin_user = User.query.filter_by(email="admin@example.com").first()
         if not admin_user:
             admin_user = User(
