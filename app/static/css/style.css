@@ -1,3 +1,4 @@
+/* Main Body */
 body {
     margin: 0;
     font-family: "Segoe UI", Arial, sans-serif;
@@ -6,6 +7,7 @@ body {
 }
 
 
+/* Main Navbar*/
 .navbar {
     display: flex;
     justify-content: space-between;
@@ -43,6 +45,7 @@ body {
 }
 
 
+/* Main Navbar: Notifications */
 .notification_dropdown {
     position: relative;
     margin-left: 25px;
@@ -121,6 +124,7 @@ body {
 }
 
 
+/* Main Flash Message */
 .flash_message {
     width: 60%;
     margin: 20px auto;
@@ -133,6 +137,7 @@ body {
 }
 
 
+/* Homepage Features */
 .features {
     display: flex;
     justify-content: center;
@@ -156,6 +161,7 @@ body {
 }
 
 
+/* Homepage Hero */
 .hero {
     height: 500px;
     display: flex;
@@ -190,6 +196,7 @@ body {
 }
 
 
+/* Home Buttons */
 .home_btn {
     background-color: #6366F1;
     text-decoration: none;
@@ -212,6 +219,7 @@ body {
 }
 
 
+/* Form Wrappers */
 .form_wrapper {
     display: flex;
     justify-content: center;
@@ -225,6 +233,7 @@ body {
 }
 
 
+/* Table Buttons */
 .table_btn {
     display: inline-block;
     padding: 6px 12px;
@@ -292,6 +301,7 @@ body {
 }
 
 
+/* Tables */
 .table_heading {
     text-align: center;
     margin-top: 40px;
@@ -382,6 +392,7 @@ body {
     background-color: #1c2430;
 }
 
+/* Table Flair: hover over login attempts and also collapse shared bill users */
 .admin_table tbody tr.good_attempt:hover {
     background-color: #162416;
 }
@@ -402,6 +413,7 @@ body {
 }
 
 
+/* Cards */
 .card {
     width: 100%;
     font-family: "Poppins", sans-serif;
@@ -442,6 +454,7 @@ body {
 }
 
 
+/* Forms */
 .form_title {
     text-align: center;
     margin-bottom: 30px;
@@ -612,6 +625,7 @@ body {
 }
 
 
+/* Side panel filter and dashboard header */
 .dashboard_header {
     display: flex;
     align-items: center;
