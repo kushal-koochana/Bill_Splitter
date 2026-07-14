@@ -15,6 +15,5 @@ class Config:
         "MAIL_SUPPRESS_SEND", "True"
     ).lower() in ("true", "1")
 
-    # Mail server settings
     MAIL_SERVER = os.environ.get("MAIL_SERVER", "127.0.0.1")
     MAIL_PORT = int(os.environ.get("MAIL_PORT", 8025))
