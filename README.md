@@ -19,7 +19,7 @@ Key Features
     creator, and reverts the bill back to the creator's drafts with a red
     (Rejected) flag for adjustments and resubmission.
   - Receipt Verification: For accountability, uploading a payment proof image is
-    compulsory. Image assets are securely served via authorization-locked
+    compulsory. Image assets are securely served via authorisation-locked
     backend routes rather than public directory exposure.
 
 📊 Dynamic User Dashboard
@@ -56,7 +56,7 @@ Key Features
 Architecture & Design Patterns
 
   - Application Factory Pattern: Built using Flask’s standard create_app()
-    factory method to safely register blueprints and initialize extension
+    factory method to safely register blueprints and initialise extension
     instances (SQLAlchemy, LoginManager, Mail) globally while avoiding circular
     dependencies.
   - Blueprint Modularization: Separates distinct features (auth, bills, admin)
@@ -91,10 +91,10 @@ On Mac/Linux: source venv/bin/activate
 # Install required packages
 pip install -r requirements.txt
 
-# Run CLI command to initialize database schema and seed default admin user
+# Run CLI command to initialise database schema and seed default admin user
 flask init-db
 
-Note: The default administrator credentials are initialized as admin@example.com
+Note: The default administrator credentials are initialised as admin@example.com
 / Password123.
 
 2. Run a Local Mail Server for Testing
