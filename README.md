@@ -84,8 +84,8 @@ schema setup:
 python3 -m venv venv
 
 # Activate the virtual environment
-# On Windows: venv\Scripts\activate
-source venv/bin/activate
+On Windows: venv\Scripts\activate
+On Mac/Linux: source venv/bin/activate
 
 # Install required packages
 pip install -r requirements.txt
