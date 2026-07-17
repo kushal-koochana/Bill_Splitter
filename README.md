@@ -1,4 +1,4 @@
-Bill Splitter Deluxe
+Bill Splitter
 
 A secure, collaborative expense-sharing and bill-splitting web application built
 with Python and the Flask framework. This application enables groups,
