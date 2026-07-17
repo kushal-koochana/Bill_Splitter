@@ -52,7 +52,6 @@ def create_app():
 
     @app.cli.command("init-db")
     def init_db():
-        """Clear existing data and create new tables."""
         from werkzeug.security import generate_password_hash
 
         from app.extensions import db
