@@ -97,7 +97,7 @@ flask init-db
 Note: The default administrator credentials are initialised as admin@example.com
 / Password123.
 
-2. Run a Local Mail Server for Testing
+# Run a Local Mail Server for Testing
 
 To test automated notification emails and password resets locally [1]:
 
