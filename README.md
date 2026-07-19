@@ -1,4 +1,4 @@
-Bill Splitter
+# Bill Splitter
 
 A secure, collaborative expense-sharing and bill-splitting web application built
 with Python and the Flask framework. This application enables groups,
@@ -6,7 +6,7 @@ housemates, or families to split shared costs, upload payment verification,
 track debts across distinct statuses (Overdue, Late Payment, Due, Paid on Time),
 and manage disputes via a collaborative rejection workflow.
 
-Key Features
+## Key Features
 
 👥 Collaborative Expense Management
 
@@ -53,7 +53,7 @@ Key Features
   - Actionable Tools: Admins have the authority to permanently delete bills or
     archive them (forcing them back to draft status).
 
-Architecture & Design Patterns
+## Architecture & Design Patterns
 
   - Application Factory Pattern: Built using Flask’s standard create_app()
     factory method to safely register blueprints and initialise extension
@@ -67,9 +67,9 @@ Architecture & Design Patterns
   - Environment Isolation: All sensitive configuration data, mail servers, and
     secret keys are loaded from an ignored .env file via python-dotenv.
 
-Installation & Setup
+## Installation & Setup
 
-Prerequisites
+### Prerequisites
 
   - Python 3.10 or higher
   - pip (Python package manager)
@@ -80,24 +80,24 @@ Clone this repository, navigate to the root directory, and run the following
 commands to set up your virtual environment, install dependencies, and run the
 schema setup:
 
-# Create the virtual environment
+### Create the virtual environment
 python3 -m venv venv
 
-# Activate the virtual environment
+### Activate the virtual environment
 On Windows: venv\Scripts\activate
 
 On Mac/Linux: source venv/bin/activate
 
-# Install required packages
+### Install required packages
 pip install -r requirements.txt
 
-# Run CLI command to initialise database schema and seed default admin user
+### Run CLI command to initialise database schema and seed default admin user
 flask init-db
 
 Note: The default administrator credentials are initialised as admin@example.com
 / Password123.
 
-# Run a Local Mail Server for Testing
+### Run a Local Mail Server for Testing
 
 To test automated notification emails and password resets locally [1]:
 
