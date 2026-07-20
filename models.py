@@ -2,7 +2,7 @@ from datetime import UTC, datetime
 
 from flask_login import UserMixin
 
-from app.extensions import db
+from extensions import db
 
 
 class User(db.Model, UserMixin):
@@ -31,9 +31,7 @@ class Bill(db.Model):
     title = db.Column(db.String(150), nullable=False)
     amount = db.Column(db.Float, nullable=False)
     category = db.Column(db.String(100), nullable=False)
-    creator_id = db.Column(
-        db.Integer, db.ForeignKey("user.id"), nullable=False
-    )
+    creator_id = db.Column(db.Integer, db.ForeignKey("user.id"), nullable=False)
     shares_paid_status = db.Column(db.String(20), default="pending")
     payment_image = db.Column(db.LargeBinary, nullable=True)
     created_at = db.Column(db.DateTime, default=lambda: datetime.now(UTC))

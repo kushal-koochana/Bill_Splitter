@@ -1,8 +1,8 @@
 from flask import Flask, flash, render_template
 from flask_login import current_user, login_required
 
-from app.config import Config
-from app.extensions import db, login_manager, mail
+from config import Config
+from extensions import db, login_manager, mail
 
 
 def create_app():
@@ -15,15 +15,15 @@ def create_app():
 
     login_manager.login_view = "auth.login"
 
-    from app.routes.admin import admin_bp
-    from app.routes.auth import auth_bp
-    from app.routes.bills import bills_bp
+    from routes.admin import admin_bp
+    from routes.auth import auth_bp
+    from routes.bills import bills_bp
 
     app.register_blueprint(auth_bp)
     app.register_blueprint(bills_bp)
     app.register_blueprint(admin_bp)
 
-    from app.models import User
+    from models import User
 
     @login_manager.user_loader
     def load_user(user_id):
@@ -54,8 +54,8 @@ def create_app():
     def init_db():
         from werkzeug.security import generate_password_hash
 
-        from app.extensions import db
-        from app.models import User
+        from extensions import db
+        from models import User
 
         db.create_all()
 

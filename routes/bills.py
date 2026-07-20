@@ -12,9 +12,9 @@ from flask import (
 )
 from flask_login import current_user, login_required
 
-from app.extensions import db
-from app.models import Bill, BillShare, Notification, User
-from app.utils import send_email
+from extensions import db
+from models import Bill, BillShare, Notification, User
+from utils import send_email
 
 bills_bp = Blueprint("bills", __name__, url_prefix="/bills")
 
@@ -22,16 +22,12 @@ bills_bp = Blueprint("bills", __name__, url_prefix="/bills")
 @bills_bp.route("/bills_dashboard")
 @login_required
 def bills_dashboard():
-    drafted_bills = [
-        bill for bill in current_user.paid_bills_created if bill.is_draft
-    ]
+    drafted_bills = [bill for bill in current_user.paid_bills_created if bill.is_draft]
     created_bills = [
         bill for bill in current_user.paid_bills_created if not bill.is_draft
     ]
     shared_bills = [
-        share
-        for share in current_user.paid_bills_shared
-        if not share.bill.is_draft
+        share for share in current_user.paid_bills_shared if not share.bill.is_draft
     ]
     return render_template(
         "bills_dashboard.html",
@@ -80,9 +76,7 @@ def create_paid_bill():
         share_amount = float(amount) / (len(selected_users) + 1)
 
         for user_id in selected_users:
-            share = BillShare(
-                bill=new_bill, user_id=user_id, share_amount=share_amount
-            )
+            share = BillShare(bill=new_bill, user_id=user_id, share_amount=share_amount)
             db.session.add(share)
 
         db.session.commit()
@@ -143,9 +137,7 @@ def edit_paid_bill(bill_id):
         share_amount = bill.amount / (len(selected_user_ids) + 1)
 
         for uid in selected_user_ids:
-            share = BillShare(
-                bill=bill, user_id=int(uid), share_amount=share_amount
-            )
+            share = BillShare(bill=bill, user_id=int(uid), share_amount=share_amount)
             db.session.add(share)
 
         db.session.commit()
@@ -183,8 +175,7 @@ def send_paid_bill(bill_id):
 
     for share in bill.shares:
         message = (
-            f"{current_user.username} sent you a bill for "
-            f"£{share.share_amount:.2f}"
+            f"{current_user.username} sent you a bill for £{share.share_amount:.2f}"
         )
         notification = Notification(user_id=share.user_id, message=message)
         db.session.add(notification)
@@ -243,9 +234,7 @@ def reject_share(share_id):
     bill.is_draft = True
     bill.shares_paid_status = "rejected"
 
-    message = (
-        f"{current_user.username} has rejected your bill: '{bill.title}'."
-    )
+    message = f"{current_user.username} has rejected your bill: '{bill.title}'."
     notification = Notification(user_id=bill.creator_id, message=message)
     db.session.add(notification)
 
@@ -255,10 +244,7 @@ def reject_share(share_id):
         email_body=message,
     )
     db.session.commit()
-    flash(
-        "You have rejected this bill. It has been returned to the creator's "
-        "drafts."
-    )
+    flash("You have rejected this bill. It has been returned to the creator's drafts.")
     return redirect(url_for("bills.bills_dashboard"))
 
 

@@ -3,8 +3,8 @@ from functools import wraps
 from flask import Blueprint, flash, redirect, render_template, url_for
 from flask_login import current_user, login_required
 
-from app.extensions import db
-from app.models import Bill, LoginAttempt, User
+from extensions import db
+from models import Bill, LoginAttempt, User
 
 admin_bp = Blueprint("admin", __name__, url_prefix="/admin")
 
@@ -30,9 +30,7 @@ def view_all_users():
         .order_by(LoginAttempt.created_at.desc())
         .all()
     )
-    return render_template(
-        "all_users.html", users=users, security_risks=security_risks
-    )
+    return render_template("all_users.html", users=users, security_risks=security_risks)
 
 
 @admin_bp.route("/user/<int:user_id>/bills")

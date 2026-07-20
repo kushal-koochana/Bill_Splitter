@@ -5,9 +5,9 @@ from flask import Blueprint, flash, redirect, render_template, request, url_for
 from flask_login import login_required, login_user, logout_user
 from werkzeug.security import check_password_hash, generate_password_hash
 
-from app.extensions import db
-from app.models import LoginAttempt, User
-from app.utils import send_email
+from extensions import db
+from models import LoginAttempt, User
+from utils import send_email
 
 auth_bp = Blueprint("auth", __name__, url_prefix="/auth")
 
@@ -29,15 +29,11 @@ def register():
             return redirect(url_for("auth.register"))
 
         if User.query.filter_by(username=username).first():
-            flash(
-                "Username already taken. Please choose a different username."
-            )
+            flash("Username already taken. Please choose a different username.")
             return redirect(url_for("auth.register"))
 
         hashed_password = generate_password_hash(password)
-        new_user = User(
-            username=username, email=email, password_hash=hashed_password
-        )
+        new_user = User(username=username, email=email, password_hash=hashed_password)
         db.session.add(new_user)
         db.session.commit()
         flash("Registration successful. Directing to login page to login...")
@@ -54,9 +50,7 @@ def login():
         is_correct_password = False
 
         if user:
-            is_correct_password = check_password_hash(
-                user.password_hash, password
-            )
+            is_correct_password = check_password_hash(user.password_hash, password)
 
         if user and is_correct_password:
             login_user(user)
@@ -98,9 +92,7 @@ def forgot_password():
                 tzinfo=None
             ) + timedelta(hours=1)
             db.session.commit()
-            reset_link = url_for(
-                "auth.reset_password", token=token, _external=True
-            )
+            reset_link = url_for("auth.reset_password", token=token, _external=True)
             msg = (
                 f"Hello {user.username},\n"
                 "Did you request a password reset? Click the link below to "
@@ -125,11 +117,7 @@ def reset_password(token):
     user = User.query.filter_by(reset_token=token).first()
     now = datetime.now(UTC).replace(tzinfo=None)
 
-    if (
-        not user
-        or not user.reset_token_expiry
-        or user.reset_token_expiry < now
-    ):
+    if not user or not user.reset_token_expiry or user.reset_token_expiry < now:
         flash("Reset link is invalid or expired.")
         return redirect(url_for("auth.login"))
 

@@ -1,6 +1,6 @@
 from flask_mail import Message
 
-from app.extensions import mail
+from extensions import mail
 
 
 def send_email(subject, recipient, email_body):
